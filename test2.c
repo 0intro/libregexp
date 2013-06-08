@@ -1,5 +1,7 @@
-#include "lib9.h"
-#include <regexp9.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "regexp9.h"
 
 int
 main(int ac, char **av)
@@ -11,9 +13,9 @@ main(int ac, char **av)
 	p = regcomp("[^a-z]");
 	s = "\n";
 	if(regexec(p, s, rs, 10))
-		print("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
+		printf("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
 	s = "0";
 	if(regexec(p, s, rs, 10))
-		print("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
+		printf("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
 	exit(0);
 }

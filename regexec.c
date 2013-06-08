@@ -1,4 +1,4 @@
-#include "lib9.h"
+#include <stdlib.h>
 #include "regexp9.h"
 #include "regcomp.h"
 
@@ -62,7 +62,7 @@ regexec1(Reprog *progp,	/* program to run */
 				break;
 			}
 		}
-		r = *(uchar*)s;
+		r = *(unsigned char*)s;
 		if(r < Runeself)
 			n = 1;
 		else
@@ -167,10 +167,10 @@ regexec2(Reprog *progp,	/* program to run */
 
 	/* mark space */
 	relist0 = malloc(BIGLISTSIZE*sizeof(Relist));
-	if(relist0 == nil)
+	if(relist0 == NULL)
 		return -1;
 	relist1 = malloc(BIGLISTSIZE*sizeof(Relist));
-	if(relist1 == nil){
+	if(relist1 == NULL){
 		free(relist1);
 		return -1;
 	}

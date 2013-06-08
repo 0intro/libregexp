@@ -1,5 +1,7 @@
-#include "lib9.h"
-#include <regexp9.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "regexp9.h"
 
 struct x
 {
@@ -33,13 +35,13 @@ main(int ac, char **av)
 		tp->p = regcomp(tp->re);
 
 	for(tp = t; tp->re; tp++){
-		print("%s VIA %s", av[1], tp->re);
+		printf("%s VIA %s", av[1], tp->re);
 		memset(rs, 0, sizeof rs);
 		if(regexec(tp->p, av[1], rs, 10)){
 			regsub(tp->s, dst, sizeof dst, rs, 10);
-			print(" sub %s -> %s", tp->s, dst);
+			printf(" sub %s -> %s", tp->s, dst);
 		}
-		print("\n");
+		printf("\n");
 	}
 	exit(0);
 }

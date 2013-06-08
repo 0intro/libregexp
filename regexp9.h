@@ -8,7 +8,7 @@ extern "C" {
 AUTOLIB(regexp9)
 #endif
 
-#include <utf.h>
+#include "utf.h"
 
 typedef struct Resub		Resub;
 typedef struct Reclass		Reclass;

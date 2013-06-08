@@ -1,4 +1,6 @@
-#include "lib9.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "regexp9.h"
 
 void
@@ -10,5 +12,5 @@ regerror(char *s)
 	strcat(buf, s);
 	strcat(buf, "\n");
 	write(2, buf, strlen(buf));
-	exits("regerr");
+	exit(1);
 }

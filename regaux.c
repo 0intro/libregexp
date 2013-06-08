@@ -1,4 +1,4 @@
-#include "lib9.h"
+#include <string.h>
 #include "regexp9.h"
 #include "regcomp.h"
 

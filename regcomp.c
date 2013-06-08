@@ -1,4 +1,7 @@
-#include "lib9.h"
+#include <stdio.h>
+#include <setjmp.h>
+#include <string.h>
+#include <stdlib.h>
 #include "regexp9.h"
 #include "regcomp.h"
 
@@ -288,12 +291,12 @@ dumpstack(void){
 	Node *stk;
 	int *ip;
 
-	print("operators\n");
+	printf("operators\n");
 	for(ip=atorstack; ip<atorp; ip++)
-		print("0%o\n", *ip);
-	print("operands\n");
+		printf("0%o\n", *ip);
+	printf("operands\n");
 	for(stk=andstack; stk<andp; stk++)
-		print("0%o\t0%o\n", stk->first->type, stk->last->type);
+		printf("0%o\t0%o\n", stk->first->type, stk->last->type);
 }
 
 static	void
@@ -304,22 +307,22 @@ dump(Reprog *pp)
 
 	l = pp->firstinst;
 	do{
-		print("%d:\t0%o\t%d\t%d", l-pp->firstinst, l->type,
+		printf("%d:\t0%o\t%d\t%d", l-pp->firstinst, l->type,
 			l->u2.left-pp->firstinst, l->u1.right-pp->firstinst);
 		if(l->type == RUNE)
-			print("\t%C\n", l->u1.r);
+			printf("\t%C\n", l->u1.r);
 		else if(l->type == CCLASS || l->type == NCCLASS){
-			print("\t[");
+			printf("\t[");
 			if(l->type == NCCLASS)
-				print("^");
+				printf("^");
 			for(p = l->u1.cp->spans; p < l->u1.cp->end; p += 2)
 				if(p[0] == p[1])
-					print("%C", p[0]);
+					printf("%C", p[0]);
 				else
-					print("%C-%C", p[0], p[1]);
-			print("]\n");
+					printf("%C-%C", p[0], p[1]);
+			printf("]\n");
 		} else
-			print("\n");
+			printf("\n");
 	}while(l++->type);
 }
 #endif
@@ -536,7 +539,7 @@ regcomp1(char *s, int literal, int dot_type)
 #endif
 	pp = optimize(pp);
 #ifdef DEBUG
-	print("start: %d\n", andp->first-pp->firstinst);
+	printf("start: %d\n", andp->first-pp->firstinst);
 	dump(pp);
 #endif
 out:
