@@ -135,9 +135,9 @@ runestrchr(Rune *s, Rune c)
 }
 
 char*
-utfrune(char *s, long c)
+utfrune(char *s, Rune c)
 {
-	long c1;
+	Rune c1;
 	Rune r;
 	int n;
 

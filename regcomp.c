@@ -36,7 +36,7 @@ static	int	lastwasand;	/* Last token was operand */
 static	int	nbra;
 static	char*	exprp;		/* pointer to next character in source expression */
 static	int	lexdone;
-static	int	nclass;
+static	unsigned int	nclass;
 static	Reclass*classp;
 static	Reinst*	freep;
 static	int	errors;
@@ -307,8 +307,8 @@ dump(Reprog *pp)
 
 	l = pp->firstinst;
 	do{
-		printf("%d:\t0%o\t%d\t%d", l-pp->firstinst, l->type,
-			l->u2.left-pp->firstinst, l->u1.right-pp->firstinst);
+		printf("%d:\t0%o\t%d\t%d", (int)(l-pp->firstinst), l->type,
+			(int)(l->u2.left-pp->firstinst), (int)(l->u1.right-pp->firstinst));
 		if(l->type == RUNE)
 			printf("\t%C\n", l->u1.r);
 		else if(l->type == CCLASS || l->type == NCCLASS){
@@ -539,7 +539,7 @@ regcomp1(char *s, int literal, int dot_type)
 #endif
 	pp = optimize(pp);
 #ifdef DEBUG
-	printf("start: %d\n", andp->first-pp->firstinst);
+	printf("start: %d\n", (int)(andp->first-pp->firstinst));
 	dump(pp);
 #endif
 out:

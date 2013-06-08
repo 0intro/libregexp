@@ -4,7 +4,7 @@
 #include "regexp9.h"
 
 int
-main(int ac, char **av)
+main()
 {
 	Resub rs[10];
 	Reprog *p;
@@ -13,9 +13,9 @@ main(int ac, char **av)
 	p = regcomp("[^a-z]");
 	s = "\n";
 	if(regexec(p, s, rs, 10))
-		printf("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
+		printf("%s %p %p %p\n", s, s, rs[0].s.sp, rs[0].e.ep);
 	s = "0";
 	if(regexec(p, s, rs, 10))
-		printf("%s %lux %lux %lux\n", s, s, rs[0].s.sp, rs[0].e.ep);
+		printf("%s %p %p %p\n", s, s, rs[0].s.sp, rs[0].e.ep);
 	exit(0);
 }

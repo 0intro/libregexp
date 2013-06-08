@@ -17,7 +17,7 @@ enum
 
 int	chartorune(Rune *rune, char *str);
 Rune*	runestrchr(Rune *s, Rune c);
-char*	utfrune(char *s, long c);
+char*	utfrune(char *s, Rune c);
 
 #if defined(__cplusplus)
 }

@@ -31,6 +31,9 @@ main(int ac, char **av)
 	char dst[128];
 	struct x *tp;
 
+	if(ac != 2)
+		exit(1);
+
 	for(tp = t; tp->re; tp++)
 		tp->p = regcomp(tp->re);
 
