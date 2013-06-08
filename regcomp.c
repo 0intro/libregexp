@@ -64,8 +64,8 @@ static	Reinst*
 newinst(int t)
 {
 	freep->type = t;
-	freep->u2.left = 0;
-	freep->u1.right = 0;
+	freep->l.left = 0;
+	freep->r.right = 0;
 	return freep++;
 }
 
@@ -79,9 +79,9 @@ operand(int t)
 	i = newinst(t);
 
 	if(t == CCLASS || t == NCCLASS)
-		i->u1.cp = yyclassp;
+		i->r.cp = yyclassp;
 	if(t == RUNE)
-		i->u1.r = yyrune;
+		i->r.r = yyrune;
 
 	pushand(i, i);
 	lastwasand = TRUE;
@@ -183,51 +183,51 @@ evaluntil(int pri)
 		case LBRA:		/* must have been RBRA */
 			op1 = popand('(');
 			inst2 = newinst(RBRA);
-			inst2->u1.subid = *subidp;
-			op1->last->u2.next = inst2;
+			inst2->r.subid = *subidp;
+			op1->last->l.next = inst2;
 			inst1 = newinst(LBRA);
-			inst1->u1.subid = *subidp;
-			inst1->u2.next = op1->first;
+			inst1->r.subid = *subidp;
+			inst1->l.next = op1->first;
 			pushand(inst1, inst2);
 			return;
 		case OR:
 			op2 = popand('|');
 			op1 = popand('|');
 			inst2 = newinst(NOP);
-			op2->last->u2.next = inst2;
-			op1->last->u2.next = inst2;
+			op2->last->l.next = inst2;
+			op1->last->l.next = inst2;
 			inst1 = newinst(OR);
-			inst1->u1.right = op1->first;
-			inst1->u2.left = op2->first;
+			inst1->r.right = op1->first;
+			inst1->l.left = op2->first;
 			pushand(inst1, inst2);
 			break;
 		case CAT:
 			op2 = popand(0);
 			op1 = popand(0);
-			op1->last->u2.next = op2->first;
+			op1->last->l.next = op2->first;
 			pushand(op1->first, op2->last);
 			break;
 		case STAR:
 			op2 = popand('*');
 			inst1 = newinst(OR);
-			op2->last->u2.next = inst1;
-			inst1->u1.right = op2->first;
+			op2->last->l.next = inst1;
+			inst1->r.right = op2->first;
 			pushand(inst1, inst1);
 			break;
 		case PLUS:
 			op2 = popand('+');
 			inst1 = newinst(OR);
-			op2->last->u2.next = inst1;
-			inst1->u1.right = op2->first;
+			op2->last->l.next = inst1;
+			inst1->r.right = op2->first;
 			pushand(op2->first, inst1);
 			break;
 		case QUEST:
 			op2 = popand('?');
 			inst1 = newinst(OR);
 			inst2 = newinst(NOP);
-			inst1->u2.left = inst2;
-			inst1->u1.right = op2->first;
-			op2->last->u2.next = inst2;
+			inst1->l.left = inst2;
+			inst1->r.right = op2->first;
+			op2->last->l.next = inst2;
 			pushand(inst1, inst2);
 			break;
 		}
@@ -247,10 +247,10 @@ optimize(Reprog *pp)
 	 *  get rid of NOOP chains
 	 */
 	for(inst=pp->firstinst; inst->type!=END; inst++){
-		target = inst->u2.next;
+		target = inst->l.next;
 		while(target->type == NOP)
-			target = target->u2.next;
-		inst->u2.next = target;
+			target = target->l.next;
+		inst->l.next = target;
 	}
 
 	/*
@@ -270,16 +270,16 @@ optimize(Reprog *pp)
 		case STAR:
 		case PLUS:
 		case QUEST:
-			inst->u1.right = (void*)((char*)inst->u1.right + diff);
+			inst->r.right = (void*)((char*)inst->r.right + diff);
 			break;
 		case CCLASS:
 		case NCCLASS:
-			inst->u1.right = (void*)((char*)inst->u1.right + diff);
-			cl = inst->u1.cp;
+			inst->r.right = (void*)((char*)inst->r.right + diff);
+			cl = inst->r.cp;
 			cl->end = (void*)((char*)cl->end + diff);
 			break;
 		}
-		inst->u2.left = (void*)((char*)inst->u2.left + diff);
+		inst->l.left = (void*)((char*)inst->l.left + diff);
 	}
 	npp->startinst = (void*)((char*)npp->startinst + diff);
 	return npp;
@@ -308,14 +308,14 @@ dump(Reprog *pp)
 	l = pp->firstinst;
 	do{
 		printf("%d:\t0%o\t%d\t%d", (int)(l-pp->firstinst), l->type,
-			(int)(l->u2.left-pp->firstinst), (int)(l->u1.right-pp->firstinst));
+			(int)(l->l.left-pp->firstinst), (int)(l->r.right-pp->firstinst));
 		if(l->type == RUNE)
-			printf("\t%C\n", l->u1.r);
+			printf("\t%C\n", l->r.r);
 		else if(l->type == CCLASS || l->type == NCCLASS){
 			printf("\t[");
 			if(l->type == NCCLASS)
 				printf("^");
-			for(p = l->u1.cp->spans; p < l->u1.cp->end; p += 2)
+			for(p = l->r.cp->spans; p < l->r.cp->end; p += 2)
 				if(p[0] == p[1])
 					printf("%C", p[0]);
 				else

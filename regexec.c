@@ -81,27 +81,27 @@ regexec1(Reprog *progp,	/* program to run */
 
 		/* Execute machine until current list is empty */
 		for(tlp=tl; tlp->inst; tlp++){	/* assignment = */
-			for(inst = tlp->inst; ; inst = inst->u2.next){
+			for(inst = tlp->inst; ; inst = inst->l.next){
 				switch(inst->type){
 				case RUNE:	/* regular character */
-					if(inst->u1.r == r){
-						if(_renewthread(nl, inst->u2.next, ms, &tlp->se)==nle)
+					if(inst->r.r == r){
+						if(_renewthread(nl, inst->l.next, ms, &tlp->se)==nle)
 							return -1;
 					}
 					break;
 				case LBRA:
-					tlp->se.m[inst->u1.subid].s.sp = s;
+					tlp->se.m[inst->r.subid].s.sp = s;
 					continue;
 				case RBRA:
-					tlp->se.m[inst->u1.subid].e.ep = s;
+					tlp->se.m[inst->r.subid].e.ep = s;
 					continue;
 				case ANY:
 					if(r != '\n')
-						if(_renewthread(nl, inst->u2.next, ms, &tlp->se)==nle)
+						if(_renewthread(nl, inst->l.next, ms, &tlp->se)==nle)
 							return -1;
 					break;
 				case ANYNL:
-					if(_renewthread(nl, inst->u2.next, ms, &tlp->se)==nle)
+					if(_renewthread(nl, inst->l.next, ms, &tlp->se)==nle)
 							return -1;
 					break;
 				case BOL:
@@ -113,26 +113,26 @@ regexec1(Reprog *progp,	/* program to run */
 						continue;
 					break;
 				case CCLASS:
-					ep = inst->u1.cp->end;
-					for(rp = inst->u1.cp->spans; rp < ep; rp += 2)
+					ep = inst->r.cp->end;
+					for(rp = inst->r.cp->spans; rp < ep; rp += 2)
 						if(r >= rp[0] && r <= rp[1]){
-							if(_renewthread(nl, inst->u2.next, ms, &tlp->se)==nle)
+							if(_renewthread(nl, inst->l.next, ms, &tlp->se)==nle)
 								return -1;
 							break;
 						}
 					break;
 				case NCCLASS:
-					ep = inst->u1.cp->end;
-					for(rp = inst->u1.cp->spans; rp < ep; rp += 2)
+					ep = inst->r.cp->end;
+					for(rp = inst->r.cp->spans; rp < ep; rp += 2)
 						if(r >= rp[0] && r <= rp[1])
 							break;
 					if(rp == ep)
-						if(_renewthread(nl, inst->u2.next, ms, &tlp->se)==nle)
+						if(_renewthread(nl, inst->l.next, ms, &tlp->se)==nle)
 							return -1;
 					break;
 				case OR:
 					/* evaluate right choice later */
-					if(_renewthread(tlp, inst->u1.right, ms, &tlp->se) == tle)
+					if(_renewthread(tlp, inst->r.right, ms, &tlp->se) == tle)
 						return -1;
 					/* efficiency: advance and re-evaluate */
 					continue;
@@ -208,9 +208,9 @@ regexec(Reprog *progp,	/* program to run */
 	}
 	j.starttype = 0;
 	j.startchar = 0;
-	if(progp->startinst->type == RUNE && progp->startinst->u1.r < Runeself) {
+	if(progp->startinst->type == RUNE && progp->startinst->r.r < Runeself) {
 		j.starttype = RUNE;
-		j.startchar = progp->startinst->u1.r;
+		j.startchar = progp->startinst->r.r;
 	}
 	if(progp->startinst->type == BOL)
 		j.starttype = BOL;

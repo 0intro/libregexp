@@ -44,16 +44,16 @@ struct Reclass{
  */
 struct Reinst{
 	int	type;
-	union	{
+	union {
 		Reclass	*cp;		/* class pointer */
 		Rune	r;		/* character */
 		int	subid;		/* sub-expression id for RBRA and LBRA */
 		Reinst	*right;		/* right child of OR */
-	}u1;
+	}r;
 	union {	/* regexp relies on these two being in the same union */
 		Reinst *left;		/* left child of OR */
 		Reinst *next;		/* next instruction for CAT & LBRA */
-	}u2;
+	}l;
 };
 
 /*
