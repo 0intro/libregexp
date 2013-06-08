@@ -27,7 +27,7 @@ all: $(LIB)
 install: $(LIB)
 	mkdir -p $(PREFIX)/share/man/man3 $(PREFIX)/man/man7
 	install -m 0644 regexp9.3 $(PREFIX)/share/man/man3/regexp9.3
-	install -m 0644 regexp9.7 $(PREFIX)/man/man7/regexp9.7
+	install -m 0644 regexp9.7 $(PREFIX)/share/man/man7/regexp9.7
 	mkdir -p $(PREFIX)/lib
 	install -m 0644 $(LIB) $(PREFIX)/lib/$(LIB)
 	mkdir -p $(PREFIX)/include
