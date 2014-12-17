@@ -39,7 +39,6 @@ rregexec1(Reprog *progp,	/* program to run */
 	/* Execute machine once for each character, including terminal NUL */
 	s = j->rstarts;
 	do{
-
 		/* fast check for first char */
 		if(checkstart) {
 			switch(j->starttype) {
