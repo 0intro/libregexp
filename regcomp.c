@@ -123,7 +123,7 @@ static	void
 cant(char *s)
 {
 	char buf[100];
-	strcpy(buf, "can't happen: ");
+	strncpy(buf, "can't happen: ", sizeof(buf));
 	strcat(buf, s);
 	rcerror(buf);
 }
