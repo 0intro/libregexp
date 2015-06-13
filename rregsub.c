@@ -47,7 +47,6 @@ rregsub(Rune *sp,	/* source string */
 			}
 		}else if(*sp == '&'){
 			if(mp[0].s.rsp != 0 && mp!=0 && ms>0)
-			if(mp[0].s.rsp != 0)
 				for(ssp = mp[0].s.rsp;
 				     ssp < mp[0].e.rep; ssp++)
 					if(dp < ep)
