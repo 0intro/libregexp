@@ -4,4 +4,3 @@ originally done for the Inferno operating system.
 Russ Cox repackaged this to build as a standalone
 Unix library.  Send comments about packaging to
 Russ Cox <rsc@post.harvard.edu>
-
