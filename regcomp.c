@@ -124,7 +124,7 @@ cant(char *s)
 {
 	char buf[100];
 	strncpy(buf, "can't happen: ", sizeof(buf));
-	strcat(buf, s);
+	strncat(buf, s, sizeof(buf)-1);
 	rcerror(buf);
 }
 
