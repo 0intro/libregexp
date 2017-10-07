@@ -94,7 +94,7 @@ operator(int t)
 		rcerror("unmatched right paren");
 	if(t==LBRA){
 		if(++cursubid >= NSUBEXP)
-			rcerror ("too many subexpressions");
+			rcerror("too many subexpressions");
 		nbra++;
 		if(lastwasand)
 			operator(CAT);
