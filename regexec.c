@@ -196,7 +196,7 @@ regexec(Reprog *progp,	/* program to run */
 	int rv;
 
 	/*
- 	 *  use user-specified starting/ending location if specified
+	 *  use user-specified starting/ending location if specified
 	 */
 	j.starts = bol;
 	j.eol = 0;
