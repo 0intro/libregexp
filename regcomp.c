@@ -98,7 +98,7 @@ operator(int t)
 		nbra++;
 		if(lastwasand)
 			operator(CAT);
-	} else
+	}else
 		evaluntil(t);
 	if(t != RBRA)
 		pushator(t);
