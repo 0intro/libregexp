@@ -81,7 +81,7 @@ regexec1(Reprog *progp,	/* program to run */
 
 		/* Execute machine until current list is empty */
 		for(tlp=tl; tlp->inst; tlp++){	/* assignment = */
-			for(inst = tlp->inst; ; inst = inst->l.next){
+			for(inst = tlp->inst; inst; inst = inst->l.next){
 				switch(inst->type){
 				case RUNE:	/* regular character */
 					if(inst->r.r == r){
