@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/0intro/libregexp.svg?branch=master)](https://travis-ci.org/0intro/libregexp)
+[![Build Status](https://github.com/0intro/libregexp/workflows/C/badge.svg)](https://github.com/0intro/libregexp/actions/workflows/c.yml)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/5975/badge.svg)](https://scan.coverity.com/projects/5975)
 
 This is a Unix port of the Plan 9 regular expression library,
