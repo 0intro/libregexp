@@ -1,5 +1,5 @@
 [![Build Status](https://github.com/0intro/libregexp/workflows/C/badge.svg)](https://github.com/0intro/libregexp/actions/workflows/c.yml)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/5975/badge.svg)](https://scan.coverity.com/projects/5975)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/0intro-libregexp/badge.svg)](https://scan.coverity.com/projects/0intro-libregexp)
 
 This is a Unix port of the Plan 9 regular expression library,
 originally done for the Inferno operating system.
